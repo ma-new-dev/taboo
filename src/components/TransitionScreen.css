@@ -1,0 +1,95 @@
+.transition-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.transition-content {
+  text-align: center;
+  color: white;
+  max-width: 440px;
+  width: 100%;
+}
+
+.round-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.2);
+  border: 2px solid rgba(255,255,255,0.4);
+  border-radius: 999px;
+  padding: 6px 20px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+  letter-spacing: 0.05em;
+}
+
+.team-name {
+  font-family: 'Nunito', sans-serif;
+  font-size: 3rem;
+  font-weight: 900;
+  text-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  margin-bottom: 24px;
+}
+
+.giver-block {
+  background: rgba(255,255,255,0.15);
+  border-radius: 20px;
+  padding: 20px 32px;
+  margin-bottom: 28px;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.25);
+}
+
+.giver-label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.8;
+  margin-bottom: 6px;
+}
+
+.giver-name {
+  font-family: 'Nunito', sans-serif;
+  font-size: 2rem;
+  font-weight: 900;
+}
+
+.instructions {
+  background: rgba(0,0,0,0.15);
+  border-radius: 16px;
+  padding: 16px 24px;
+  margin-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.instructions p {
+  font-size: 1rem;
+  opacity: 0.9;
+  line-height: 1.5;
+}
+
+.ready-btn {
+  width: 100%;
+  padding: 20px;
+  background: white;
+  color: #1e1b4b;
+  border-radius: 18px;
+  font-size: 1.3rem;
+  font-weight: 900;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.ready-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.25);
+}
+
+.ready-btn:active {
+  transform: translateY(0);
+}
