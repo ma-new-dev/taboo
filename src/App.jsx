@@ -18,7 +18,7 @@ function shuffle(array) {
 
 export const DEFAULT_SETTINGS = {
   timePerRound: 60,
-  totalRounds: 3,
+  totalRounds: 5,
   pointsCorrect: 1,
   pointsWrong: 1,
   freeSkips: 3,

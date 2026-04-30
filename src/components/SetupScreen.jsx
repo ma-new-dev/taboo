@@ -134,7 +134,7 @@ export default function SetupScreen({ onStart, defaultSettings }) {
           <div className="setting-row">
             <label>🔄 Rounds (each team plays this many times)</label>
             <div className="preset-buttons">
-              {[2, 3, 4, 5].map(p => (
+              {[5, 10, 15, 20].map(p => (
                 <button
                   key={p}
                   className={`preset-btn ${settings.totalRounds === p ? 'active' : ''}`}

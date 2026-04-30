@@ -33,7 +33,7 @@ export default function GameScreen({ deck, startCardIndex, settings, teamName, t
     if (phase !== 'playing') return
     if (timeLeft <= 0) {
       setPhase('done')
-      onEndTurn(actionsRef.current, localIdxRef.current)
+      onEndTurn(actionsRef.current, localIdxRef.current + 1)
       return
     }
     const t = setTimeout(() => setTimeLeft(s => s - 1), 1000)
