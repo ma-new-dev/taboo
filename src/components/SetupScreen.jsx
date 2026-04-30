@@ -5,7 +5,7 @@ const PRESETS = [30, 60, 90, 120]
 
 export default function SetupScreen({ onStart, defaultSettings }) {
   const [settings, setSettings] = useState(defaultSettings)
-  const [playerNames, setPlayerNames] = useState(['Dev', 'Khushi', 'Gareem', ''])
+  const [playerNames, setPlayerNames] = useState(['', '', '', ''])
   const [teamAssign, setTeamAssign] = useState([0, 1, 0, 1]) // which team each player is on
   const [teamNames, setTeamNames] = useState(['Team 1', 'Team 2'])
   const [error, setError] = useState('')
