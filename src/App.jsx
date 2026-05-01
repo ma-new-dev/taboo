@@ -7,13 +7,36 @@ import GameOverScreen from './components/GameOverScreen'
 import { wordCards } from './data/words'
 import './App.css'
 
-function shuffle(array) {
-  const arr = [...array]
+const DECK_KEY = 'taboo_deck_v1'
+
+function shuffleIndices(n) {
+  const arr = Array.from({ length: n }, (_, i) => i)
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1))
     ;[arr[i], arr[j]] = [arr[j], arr[i]]
   }
   return arr
+}
+
+// Load persisted deck from localStorage, or create a fresh one
+function loadDeck() {
+  try {
+    const raw = localStorage.getItem(DECK_KEY)
+    if (raw) {
+      const { indices, pos } = JSON.parse(raw)
+      if (Array.isArray(indices) && indices.length === wordCards.length && typeof pos === 'number') {
+        return { indices, pos }
+      }
+    }
+  } catch {}
+  const indices = shuffleIndices(wordCards.length)
+  return { indices, pos: 0 }
+}
+
+function saveDeck(indices, pos) {
+  try {
+    localStorage.setItem(DECK_KEY, JSON.stringify({ indices, pos }))
+  } catch {}
 }
 
 export const DEFAULT_SETTINGS = {
@@ -28,8 +51,8 @@ export default function App() {
   const [screen, setScreen] = useState('setup')
   const [settings, setSettings] = useState(DEFAULT_SETTINGS)
   const [teams, setTeams] = useState([
-    { name: 'Team 1', players: ['Dev', 'Gareem'], score: 0, giverIndex: 0 },
-    { name: 'Team 2', players: ['Khushi', ''], score: 0, giverIndex: 0 },
+    { name: 'Team 1', players: [], score: 0, giverIndex: 0 },
+    { name: 'Team 2', players: [], score: 0, giverIndex: 0 },
   ])
   const [turnNumber, setTurnNumber] = useState(0)
   const [deck, setDeck] = useState([])
@@ -44,11 +67,22 @@ export default function App() {
   const currentGiver = activePlayers[currentTeam.giverIndex % Math.max(activePlayers.length, 1)] || 'Player'
 
   function startGame(newSettings, newTeams) {
+    let { indices, pos } = loadDeck()
+
+    // All words used — reshuffle and start over
+    if (pos >= wordCards.length) {
+      indices = shuffleIndices(wordCards.length)
+      pos = 0
+    }
+
+    const newDeck = indices.map(i => wordCards[i])
+    saveDeck(indices, pos)
+
     setSettings(newSettings)
     setTeams(newTeams.map(t => ({ ...t, score: 0, giverIndex: 0 })))
     setTurnNumber(0)
-    setDeck(shuffle(wordCards))
-    setCardIndex(0)
+    setDeck(newDeck)
+    setCardIndex(pos)
     setScreen('transition')
   }
 
@@ -72,7 +106,13 @@ export default function App() {
           : team
       )
     )
-    setCardIndex(newCardIndex % deck.length)
+
+    // Clamp to deck length and persist the new position
+    const nextPos = Math.min(newCardIndex, wordCards.length)
+    setCardIndex(nextPos)
+    const { indices } = loadDeck()
+    saveDeck(indices, nextPos)
+
     setLastActions(actions)
     setScreen('roundSummary')
   }
